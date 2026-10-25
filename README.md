@@ -19,7 +19,7 @@ The captured landing keeps its public links pointed at `sightbridge.com`; the de
 
 ## Scope
 
-This repository presents the landing and advisor-chat experience. The chat answers only from the companion service's approved public source set, shows citations for grounded answers and a brief disclaimer on every completed answer. It does not provide personalized tax, legal or investment advice.
+This repository presents the landing and advisor-chat experience. The chat answers substantive questions only from the companion service's approved public source set. Grounded answers show citations and a brief notice within the expanded sources section; conversational greetings do not show that notice. It does not provide personalized tax, legal or investment advice.
 
 ## What I left out and what I would build next
 
