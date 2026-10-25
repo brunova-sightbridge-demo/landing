@@ -21,6 +21,18 @@ The captured landing keeps its public links pointed at `sightbridge.com`; the de
 
 This repository presents the landing and advisor-chat experience. The chat answers substantive questions only from the companion service's approved public source set. Grounded answers show citations and a brief notice within the expanded sources section; conversational greetings do not show that notice. It does not provide personalized tax, legal or investment advice.
 
+### Public sources used by the RAG demo
+
+The companion Agent Service currently indexes these seven public sources. Its admin console shows the exact uploaded snapshot and processing status for each document.
+
+1. [IRS — Like-kind exchanges: real estate tax tips](https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips)
+2. [IRS — Instructions for Form 8824: deferred exchange timing](https://www.irs.gov/instructions/i8824)
+3. [IRS — Publication 544: qualifying property and partial gain](https://www.irs.gov/publications/p544)
+4. [IRS — Revenue Ruling 2004-86: Delaware statutory trusts](https://www.irs.gov/irb/2004-33_IRB)
+5. [IRS — Publication 541: contributions to partnerships](https://www.irs.gov/publications/p541)
+6. [SEC Investor.gov — Investor Bulletin: Non-traded REITs](https://www.investor.gov/introduction-investing/general-resources/news-alerts/alerts-bulletins/investor-bulletins-89)
+7. [Sightbridge — Public description of its strategies](https://sightbridge.com/)
+
 ## What I left out and what I would build next
 
 I kept access control deliberately simple: Google verifies identity and role-based access control (RBAC) decides who can use the chat or administer it. I left out attribute-based access control (ABAC), such as policies that vary by advisor firm, document ownership, or client context. Those rules would need real organizational data and policy decisions that this public-source demo does not have.
