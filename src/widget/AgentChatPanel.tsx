@@ -122,9 +122,9 @@ export function AgentChatPanel({
                 type="button"
                 onClick={() => window.location.assign(consoleUrl)}
                 aria-label={lang === "es" ? "Abrir consola administrativa" : "Open admin console"}
-                className="mt-1 rounded-sm text-left text-xs font-medium text-[var(--scol-text-muted)] underline-offset-2 transition hover:text-[var(--scol-primary)] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--scol-primary)]"
+                className="mt-2 inline-flex items-center rounded-full border border-[var(--scol-border)] bg-[var(--scol-surface-alt)] px-3 py-1 text-left text-xs font-semibold text-[var(--scol-primary)] shadow-sm transition hover:border-[var(--scol-primary)] hover:bg-[var(--scol-surface)] hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--scol-primary)]"
               >
-                {lang === "es" ? "Consola" : "Console"}
+                {lang === "es" ? "Consola administrativa" : "Admin console"}
               </button>
             )}
           </div>
