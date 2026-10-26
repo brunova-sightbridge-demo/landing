@@ -114,35 +114,24 @@ export function AgentChatPanel({
 
   return (
     <div className="relative flex h-full min-h-0 w-full max-w-[420px] flex-col rounded-3xl bg-[var(--scol-surface)] shadow-2xl">
-      <header className="flex items-start gap-3 border-b border-[var(--scol-border)] px-5 py-4">
-        <div className="flex min-w-0 flex-1 items-start gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-2xl border-2 border-[var(--scol-primary)] bg-white text-[var(--scol-primary)] shadow-md">
+      <header className="border-b border-[var(--scol-border)] px-5 py-4">
+        <div className="flex items-center gap-3">
+          <div className="flex min-w-0 flex-1 items-center gap-3">
+          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border-2 border-[var(--scol-primary)] bg-white text-[var(--scol-primary)] shadow-md">
             <span className="text-sm font-bold">SB</span>
           </div>
           <div className="min-w-0 flex-1">
             <p className="text-base font-semibold text-[var(--scol-text)]">
               {headerTitle || t(lang, "title")}
             </p>
-            <p className="text-sm text-[var(--scol-text-muted)]">
-              {subtitle || t(lang, "subtitle")}
-            </p>
-            {consoleUrl && (
-              <button
-                type="button"
-                onClick={() => window.location.assign(consoleUrl)}
-                aria-label={lang === "es" ? "Abrir consola administrativa" : "Open admin console"}
-                className="mt-2 inline-flex items-center rounded-full border border-[var(--scol-border)] bg-[var(--scol-surface-alt)] px-3 py-1 text-left text-xs font-semibold text-[var(--scol-primary)] shadow-sm transition hover:border-[var(--scol-primary)] hover:bg-[var(--scol-surface)] hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--scol-primary)]"
-              >
-                {lang === "es" ? "Consola administrativa" : "Admin console"}
-              </button>
-            )}
+            {subtitle && <p className="text-xs text-[var(--scol-text-muted)]">{subtitle}</p>}
           </div>
-        </div>
-        <select
+          </div>
+          <select
           aria-label={lang === "es" ? "Idioma del chat" : "Chat language"}
           value={lang}
           onChange={(event) => changeLanguage(event.target.value as Language)}
-          className="self-center rounded-lg border border-[var(--scol-border)] bg-[var(--scol-surface)] px-2 py-1 text-xs font-semibold text-[var(--scol-text)]"
+          className="shrink-0 rounded-lg border border-[var(--scol-border)] bg-[var(--scol-surface)] px-2 py-1 text-xs font-semibold text-[var(--scol-text)]"
         >
           <option value="es">ES</option><option value="en">EN</option>
         </select>
@@ -154,7 +143,7 @@ export function AgentChatPanel({
             disabled={logoutPending}
             title={t(lang, "logout")}
             aria-label={t(lang, "logout")}
-            className="self-center rounded-full p-2 text-[var(--scol-text-muted)] transition hover:bg-[var(--scol-surface-alt)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--scol-primary)] disabled:opacity-50"
+            className="shrink-0 rounded-full p-2 text-[var(--scol-text-muted)] transition hover:bg-[var(--scol-surface-alt)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--scol-primary)] disabled:opacity-50"
           >
             <LogOutIcon className="h-5 w-5" />
           </button>
@@ -162,10 +151,16 @@ export function AgentChatPanel({
         {showClose && (
           <button
             aria-label={t(lang, "close")}
-            className="self-center rounded-full p-2 text-[var(--scol-text-muted)] transition hover:bg-[var(--scol-surface-alt)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--scol-primary)]"
+            className="shrink-0 rounded-full p-2 text-[var(--scol-text-muted)] transition hover:bg-[var(--scol-surface-alt)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[var(--scol-primary)]"
             onClick={onClose}
           >
             <CloseIcon className="h-5 w-5" />
+          </button>
+        )}
+        </div>
+        {consoleUrl && (
+          <button type="button" onClick={() => window.location.assign(consoleUrl)} aria-label={lang === "es" ? "Abrir consola administrativa" : "Open admin console"} className="mt-3 flex w-full items-center justify-center rounded-xl border border-[var(--scol-border)] bg-[var(--scol-surface-alt)] px-4 py-2 text-xs font-semibold text-[var(--scol-primary)] shadow-sm transition hover:border-[var(--scol-primary)] hover:bg-[var(--scol-surface)] hover:shadow focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--scol-primary)]">
+            {lang === "es" ? "Consola administrativa" : "Admin console"}
           </button>
         )}
       </header>
