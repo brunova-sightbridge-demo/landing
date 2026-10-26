@@ -14,7 +14,7 @@ if (host) {
       baseUrl={window.SIGHTBRIDGE_API_BASE || "http://localhost:8001"}
       language="en"
       placement="bottom-right"
-      theme={{ primary: "#292b30", primaryDark: "#1c1e22" }}
+      theme={{ primary: "#1E1E24", primaryDark: "#14141A" }}
     />,
   );
 }
