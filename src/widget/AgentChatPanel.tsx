@@ -17,6 +17,7 @@ export interface AgentChatPanelProps extends AgentChatBaseProps {
   maxQuestionChars?: number;
   onLanguageChange?: (language: Language) => void;
   onLogout?: () => Promise<void>;
+  consoleUrl?: string;
 }
 
 export function AgentChatPanel({
@@ -34,6 +35,7 @@ export function AgentChatPanel({
   maxQuestionChars = 800,
   onLanguageChange,
   onLogout,
+  consoleUrl,
 }: AgentChatPanelProps) {
   const [lang, setLang] = useState<Language>(() => {
     const stored = typeof window !== "undefined" ? window.localStorage.getItem("agent_service_language") : null;
@@ -155,6 +157,18 @@ export function AgentChatPanel({
           </button>
         )}
       </header>
+
+      {consoleUrl && (
+        <div className="flex justify-end px-5 pt-2">
+          <button
+            type="button"
+            onClick={() => window.location.assign(consoleUrl)}
+            className="rounded-md text-xs font-semibold text-[var(--scol-text-muted)] underline-offset-2 transition hover:text-[var(--scol-primary)] hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--scol-primary)]"
+          >
+            {lang === "es" ? "Consola administrativa ↗" : "Admin console ↗"}
+          </button>
+        </div>
+      )}
 
       <MessageList messages={messages} language={lang} showCitations={showCitations} />
 

@@ -30,6 +30,7 @@ export function AgentChatBubble({
   const [access, setAccess] = useState<"checking" | "granted" | "required" | "error">("checking");
   const [showCitations, setShowCitations] = useState(false);
   const [loginRequired, setLoginRequired] = useState(false);
+  const [consoleAvailable, setConsoleAvailable] = useState(false);
   const [maxQuestionChars, setMaxQuestionChars] = useState(800);
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(() => {
     const stored = typeof window !== "undefined" ? window.localStorage.getItem("agent_service_language") : null;
@@ -65,6 +66,7 @@ export function AgentChatBubble({
     if (!isOpen) return;
     let active = true;
     setAccess("checking");
+    setConsoleAvailable(false);
     fetch(`${baseUrl}/chat/config`, { credentials: "include" })
       .then(async (response) => {
         if (!response.ok) throw new Error("Chat configuration unavailable");
@@ -80,7 +82,13 @@ export function AgentChatBubble({
           return;
         }
         const me = await fetch(`${baseUrl}/auth/me`, { credentials: "include" });
-        if (active) setAccess(me.ok ? "granted" : "required");
+        if (!active) return;
+        if (me.ok) {
+          const actor = await me.json();
+          if (!active) return;
+          setConsoleAvailable(["viewer", "curator", "admin"].includes(actor.role));
+        }
+        setAccess(me.ok ? "granted" : "required");
       })
       .catch(() => { if (active) setAccess("error"); });
     return () => { active = false; };
@@ -100,6 +108,7 @@ export function AgentChatBubble({
     });
     if (!response.ok) throw new Error("Sign out failed");
     setAccess("required");
+    setConsoleAvailable(false);
     setUnread(0);
     handleOpenChange(false);
     window.dispatchEvent(new Event("agent-service-auth-change"));
@@ -113,6 +122,9 @@ export function AgentChatBubble({
   }, [open]);
 
   const bubblePosition = placement === "bottom-right" ? "right-6" : "left-6";
+  const consoleUrl = typeof window !== "undefined" && /^(localhost|127\.0\.0\.1)$/.test(window.location.hostname)
+    ? "http://localhost:5174/"
+    : `${window.location.origin}/console/`;
 
   const effectiveTheme = useMemo(() => ({ ...defaultTheme, ...(theme || {}), ...(sharedAccent || {}) }), [theme, sharedAccent]);
   const themeStyle = useMemo(() => {
@@ -163,8 +175,9 @@ export function AgentChatBubble({
                   : (access === "error" ? "Could not check access. Close and reopen the chat." : "Sign in to use the assistant.")}
               </p>
               {access === "required" && (
-                <a
-                  href={`${baseUrl}/auth/google/start?next=chat`}
+                <button
+                  type="button"
+                  onClick={() => window.location.assign(`${baseUrl}/auth/google/start?next=chat`)}
                   className="group relative isolate overflow-hidden rounded-full bg-[var(--scol-primary)] px-5 py-3 text-sm font-semibold !text-white shadow-md transition-shadow duration-200 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--scol-primary)]"
                   onMouseMove={(event) => {
                     const bounds = event.currentTarget.getBoundingClientRect();
@@ -174,7 +187,7 @@ export function AgentChatBubble({
                 >
                   <span aria-hidden="true" className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none" style={{ background: "radial-gradient(95px circle at var(--glow-x, 50%) var(--glow-y, 50%), rgba(255,255,255,0.24), rgba(255,255,255,0.05) 48%, transparent 80%)" }} />
                   <span className="relative z-10">{selectedLanguage === "es" ? "Continuar con Google" : "Continue with Google"}</span>
-                </a>
+                </button>
               )}
               <select
                 aria-label={selectedLanguage === "es" ? "Idioma del chat" : "Chat language"}
@@ -204,6 +217,7 @@ export function AgentChatBubble({
                   maxQuestionChars={maxQuestionChars}
                   onClose={() => handleOpenChange(false)}
                   onLogout={loginRequired ? signOut : undefined}
+                  consoleUrl={consoleAvailable ? consoleUrl : undefined}
                   showClose
                   onMessage={(msg) => {
                     if (!isOpen && msg.role === "agent") {
@@ -228,6 +242,7 @@ export function AgentChatBubble({
                   maxQuestionChars={maxQuestionChars}
                   onClose={() => handleOpenChange(false)}
                   onLogout={loginRequired ? signOut : undefined}
+                  consoleUrl={consoleAvailable ? consoleUrl : undefined}
                   showClose
                   onMessage={(msg) => {
                     if (!isOpen && msg.role === "agent") {

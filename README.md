@@ -1,6 +1,8 @@
 # Sightbridge landing demo
 
-An independent, local prototype by Brunova for Sightbridge. This repository contains a captured public landing view and a separately built advisor-chat widget. It is **not** the official Sightbridge website. The assistant API and admin console live in the companion `agent-service` repository in the same GitHub organization.
+An independent prototype by Brunova for Sightbridge. This repository contains a captured public landing view and a separately built advisor-chat widget. It is **not** the official Sightbridge website. The assistant API and admin console live in the companion `agent-service` repository in the same GitHub organization.
+
+The deployed demo is at [sightbridge.brunova.mx](https://sightbridge.brunova.mx/). Its admin console is at [sightbridge.brunova.mx/console/](https://sightbridge.brunova.mx/console/); access requires an authorized Google account.
 
 ## Run locally
 
@@ -13,7 +15,9 @@ npm run build
 python3 -m http.server 8766
 ```
 
-Open `http://localhost:8766`. The chat bubble asks for Google sign-in before allowing a question. Its sign-out control closes the shared chat and console session, clears the visible conversation, and closes the bubble. Reopening it presents Google sign-in so another account can be selected. The Google web client in Agent Service must allow `http://localhost:8001/auth/google/callback`; the API must use this landing as `OIDC_CHAT_URL` and allow its origin. `widget-config.js` supplies the API URL, defaulting to the local port. No credentials belong in this repository.
+Open `http://localhost:8766`. The chat bubble asks for Google sign-in before allowing a question. Its sign-out control closes the shared chat and console session, clears the visible conversation, and closes the bubble. Reopening it presents Google sign-in so another account can be selected. The Google web client in Agent Service must allow `http://localhost:8001/auth/google/callback`; the API must use this landing as `OIDC_CHAT_URL` and allow its origin. `widget-config.js` uses the local API port on localhost and the same-origin `/api` path on the deployed site. No credentials belong in this repository.
+
+After sign-in, accounts with console access see **Admin console ↗** inside the chat bubble. Chat-only accounts do not see it, and the console independently enforces the same role check.
 
 The captured landing keeps its public links pointed at `sightbridge.com`; the demo badge distinguishes this prototype from the live company site. The original public layout and assets are used only to show the widget in context. The widget styling, disclaimer and access flow are supplied by this demo.
 
