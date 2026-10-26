@@ -17,7 +17,7 @@ python3 -m http.server 8766
 
 Open `http://localhost:8766`. The chat bubble asks for Google sign-in before allowing a question. Its sign-out control closes the shared chat and console session, clears the visible conversation, and closes the bubble. Reopening it presents Google sign-in so another account can be selected. The Google web client in Agent Service must allow `http://localhost:8001/auth/google/callback`; the API must use this landing as `OIDC_CHAT_URL` and allow its origin. `widget-config.js` uses the local API port on localhost and the same-origin `/api` path on the deployed site. No credentials belong in this repository.
 
-After sign-in, accounts with console access see **Admin console ↗** inside the chat bubble. Chat-only accounts do not see it, and the console independently enforces the same role check.
+After sign-in, accounts with console access see a discreet **Console** link beneath the chat title. Chat-only accounts do not see it, and the console independently enforces the same role check.
 
 The captured landing keeps its public links pointed at `sightbridge.com`; the demo badge distinguishes this prototype from the live company site. The original public layout and assets are used only to show the widget in context. The widget styling, disclaimer and access flow are supplied by this demo.
 
