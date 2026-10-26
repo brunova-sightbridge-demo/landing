@@ -2,7 +2,7 @@
 
 An independent prototype by Jorge Vera for Sightbridge. This repository contains a captured public landing view and a separately built advisor-chat widget. It is **not** the official Sightbridge website. The assistant API and admin console live in the companion `agent-service` repository in the same GitHub organization.
 
-The deployed demo is at [sightbridge.brunova.mx](https://sightbridge.brunova.mx/). Its admin console is at [sightbridge.brunova.mx/console/](https://sightbridge.brunova.mx/console/); access requires an authorized Google account.
+Open the [deployed demo](https://sightbridge.brunova.mx/) or its [admin console](https://sightbridge.brunova.mx/console/); console access requires an authorized Google account.
 
 ## Run locally
 
