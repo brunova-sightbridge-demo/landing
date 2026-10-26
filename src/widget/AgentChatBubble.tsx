@@ -6,6 +6,7 @@ import type { Language, AgentChatBaseProps } from "./types";
 import { AgentIcon, BadgeDot, ChatIcon } from "./components/icons";
 import { defaultTheme } from "./theme";
 import { readSharedAccent } from "./accent";
+import { canOpenAdminConsole } from "./consoleAccess";
 
 export interface AgentChatBubbleProps extends AgentChatBaseProps {
   placement?: "bottom-right" | "bottom-left";
@@ -86,7 +87,7 @@ export function AgentChatBubble({
         if (me.ok) {
           const actor = await me.json();
           if (!active) return;
-          setConsoleAvailable(["viewer", "curator", "admin"].includes(actor.role));
+          setConsoleAvailable(canOpenAdminConsole(actor.role));
         }
         setAccess(me.ok ? "granted" : "required");
       })
